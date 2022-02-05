@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form method="get">
 
+    {{ testerfilter.form}}
+    <button type="submit">search</button>
+</form>
 <table class="table mb-0">
-    <form method="get">
 
-        {{ testerfilter.form}}
-        <button type="submit">search</button>
-    </form>
 
 
     <thead>

@@ -7,4 +7,4 @@ class TesterFilter(django_filters.FilterSet):
     class Meta:
         model=Tester
         exclude = ['video_file']
-        fields='__all__'
+        fields=['tester_ID','test_id']

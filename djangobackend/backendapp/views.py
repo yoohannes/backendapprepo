@@ -29,8 +29,9 @@ def index(request):
 
 def detailview(request):
     testers=Tester.objects.all()
-    testerfilter=TesterFilter()
-
+    #testers=Tester.objects.filter()
+    testerfilter=TesterFilter(request.GET,queryset=testers)
+    testers=testerfilter.qs
     context={'Testersdata':testers,'testerfilter':testerfilter}
     return render(request,'detailview.html',context)
      
