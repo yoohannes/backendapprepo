@@ -1,10 +1,11 @@
 from dataclasses import field
 import django_filters
 
-from .models import Tester
+from .models import *
+
 
 class TesterFilter(django_filters.FilterSet):
     class Meta:
-        model=Tester
-        exclude = ['video_file']
-        fields=['tester_ID','test_id']
+        model = Pics
+        exclude = ["video_file"]
+        fields = ["tester__tester_ID", "tester__test_id"]

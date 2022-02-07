@@ -19,12 +19,20 @@
             <th>phone_model</th>
             <th>screen_height</th>
             <th>screen_width</th>
+            <th>pic_height</th>
+            <th>pic_time</th>
+            <th>pic_width</th>
+            <th>pic_num</th>
+            <th>image</th>
+            <th>duration</th>
+            <th>video_time</th>
             <th>video_file</th>
 
 
 
 
         </tr>
+
     </thead>
 
 
@@ -33,14 +41,22 @@
         {% for i in Testersdata %}
         <tr>
 
-            <td>{{i.tester_ID}}</td>
-            <td>{{i.test_id}}</td>
+            <td>{{i.tester.tester_ID}}</td>
+            <td>{{i.tester.test_id}}</td>
+            <td>{{i.tester.time}}</td>
+            <td>{{i.tester.phone_manufacturer}}</td>
+            <td>{{i.tester.phone_model}}</td>
+            <td>{{i.tester.screen_height}}</td>
+            <td>{{i.tester.screen_width}}</td>
+            <td>{{i.height}}</td>
             <td>{{i.time}}</td>
-            <td>{{i.phone_manufacturer}}</td>
-            <td>{{i.phone_model}}</td>
-            <td>{{i.screen_height}}</td>
-            <td>{{i.screen_width}}</td>
-            <td>{{i.video_file}}</td>
+            <td>{{i.width}}</td>
+            <td>{{i.pic_num}}</td>
+            <td>{{i.image}}</td>
+
+            <td>{{i.tester__duration}}</td>
+            <td>{{i.tester__video_time}}</td>
+            <td>{{i.tester__video_file}}</td>
 
         </tr>
         {% endfor %}

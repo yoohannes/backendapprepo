@@ -3,8 +3,17 @@
 {% block content %}
 <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="File" name="jsonfile">
-    <input type="File" name="videofile">
+    <label for="testerjson">select testerjson file</label>
+    <input type="File" id="testerjson" name="testerjson">
+
+    <label for="picsjson">select picsjson file</label>
+    <input type="File" id="picsjson" name="picsjson">
+
+    <label for="videojson">select videojson file</label>
+    <input type="File" id="videojson" name="videojson">
+
+    <label for="videofile">select video recording</label>
+    <input type="File" id="videofile" name="videofile">
 
     <button type="submit">Upload</button>
 </form>

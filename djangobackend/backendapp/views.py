@@ -1,42 +1,54 @@
 from multiprocessing import context
+from django.http import HttpResponse
 from django.shortcuts import render
-import json 
-from .models import Tester
+import json
+from .models import Pics, Tester, Pics, Video
 from .filters import TesterFilter
-# Create your views here.
+import base64
 
 
 def index(request):
     if request.method == "POST":
-            file = request.FILES['jsonfile']
-            file2= request.FILES['videofile']
-            # do some parsing and create the object here
-            try:
-                print('im here')
-                data=(file.read())
-                print(data)
-                test=json.loads(data)
-                print('im here not here')
-                test['video_file']=file2
-                U=Tester(**test)
-                U.save() 
-            except ValueError:
-                print('decoding failed')
-            
-    
+        tester_meta = request.FILES["testerjson"].read()
+        pics_meta = request.FILES["picsjson"].read()
+        video_meta = request.FILES["videojson"].read()
+        video_file = request.FILES["videofile"]
 
-    return render(request,'index.html')
+        try:
+            tester_Decoded = json.loads(tester_meta)
+            U = Tester(**tester_Decoded)
+            U.save()
+
+        except ValueError:
+            print("decoding failed")
+
+        pics = json.loads(pics_meta)
+        for pic in pics:
+
+            with open(pic["image_path"], "rb") as image_file:
+                pic["image"] = base64.b64encode(image_file.read())
+            del pic["image_path"]
+
+            instance1 = Pics(**pic)
+            instance1.tester_id = U.tester_ID
+            instance1.save()
+
+        video = json.loads(video_meta)
+        video["video_file"] = video_file
+        vid_ooj = Video(**video)
+        vid_ooj.tester_id = U.tester_ID
+
+        vid_ooj.save()
+
+        return HttpResponse("Tester data uploaded successfully")
+    return render(request, "index.html")
+
 
 def detailview(request):
-    testers=Tester.objects.all()
-    #testers=Tester.objects.filter()
-    testerfilter=TesterFilter(request.GET,queryset=testers)
-    testers=testerfilter.qs
-    context={'Testersdata':testers,'testerfilter':testerfilter}
-    return render(request,'detailview.html',context)
-     
-
-
-
-
-
+    pictures = Pics.objects.all()
+    # testers=Tester.objects.filter()
+    # print(testers.filter(tester__pics__pic_num=1))
+    testerfilter = TesterFilter(request.GET, queryset=pictures)
+    testers = testerfilter.qs
+    context = {"Testersdata": testers, "testerfilter": testerfilter}
+    return render(request, "detailview.html", context)
